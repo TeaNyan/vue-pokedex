@@ -5,7 +5,7 @@ import SinglePokemon from '@/components/SinglePokemon.vue'
 
 <template>
   <main>
-    <div class="flex justify-center w-full">
+    <div class="flex justify-center w-full bg-white">
       <div class="max-w-[1200px] w-full py-8">
         <PokemonList />
       </div>

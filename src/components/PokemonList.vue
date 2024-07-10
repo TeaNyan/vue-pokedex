@@ -44,6 +44,8 @@ const fetchPokemonList = async () => {
     setPokemonList([...pokemonList.value, ...newList])
     if (!selectedPokemon.value) {
       store.dispatch('setSelectedPokemonAction', newList[0])
+    } else {
+      console.log('Selected Pokemon:', selectedPokemon.value)
     }
   } catch (error) {
     console.error(error)

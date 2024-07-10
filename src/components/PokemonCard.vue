@@ -2,9 +2,10 @@
 import { calculateCardColor } from '@/assets/helpers/calculateCardColor'
 import { useStore } from 'vuex'
 
-defineProps({
+const props = defineProps({
   pokemon: Object
 })
+const { pokemon } = props
 
 const store = useStore()
 
@@ -15,7 +16,7 @@ const setSelectedPokemon = (pokemon) => {
 
 <template>
   <button
-    :class="`${calculateCardColor(pokemon.types[0].type.name)} shadow-md rounded-lg p-4`"
+    :class="`${calculateCardColor(pokemon.types[0].type.name)} shadow-md rounded-2xl p-4`"
     @click="() => setSelectedPokemon(pokemon)"
   >
     <div class="grid grid-cols-2">
