@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import { calculateCardColor } from '@/assets/helpers/calculateCardColor'
+import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 import { useStore } from 'vuex'
 
 const store = useStore()
@@ -25,7 +26,7 @@ console.log(selectedPokemon)
             class="w-32 h-32 mx-auto"
           />
         </div>
-        <h1 v-else>Please select a Pokemon</h1>
+        <h1 v-else><PulseLoader /></h1>
       </div>
     </div>
   </section>

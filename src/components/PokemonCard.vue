@@ -9,7 +9,7 @@ defineProps({
 const store = useStore()
 
 const setSelectedPokemon = (pokemon) => {
-  store.dispatch('setSelectedPokemon', pokemon)
+  store.dispatch('setSelectedPokemonAction', pokemon)
 }
 </script>
 

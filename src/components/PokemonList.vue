@@ -1,14 +1,19 @@
 <script setup>
-import { reactive, onMounted, onBeforeUnmount, ref } from 'vue'
+import { reactive, onMounted, onBeforeUnmount, ref, computed } from 'vue'
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 import PokemonCard from '@/components/PokemonCard.vue'
+import { useStore } from 'vuex'
 
 const state = reactive({
-  selectedPokemon: null,
-  pokemonList: [],
   isLoading: true,
   nextUrl: 'https://pokeapi.co/api/v2/pokemon?limit=20'
 })
+
+const store = useStore()
+
+const pokemonList = computed(() => store.getters.pokemonList)
+const selectedPokemon = computed(() => store.getters.selectedPokemon)
+const setPokemonList = (list) => store.dispatch('setPokemonListAction', list)
 
 const sentinel = ref(null)
 
@@ -36,7 +41,10 @@ const fetchPokemonList = async () => {
       const pokemonData = await fetchPokemonData(pokemon.url)
       newList.push(pokemonData)
     }
-    state.pokemonList = [...state.pokemonList, ...newList]
+    setPokemonList([...pokemonList.value, ...newList])
+    if (!selectedPokemon.value) {
+      store.dispatch('setSelectedPokemonAction', newList[0])
+    }
   } catch (error) {
     console.error(error)
   } finally {
@@ -75,7 +83,7 @@ onBeforeUnmount(() => {
   <!-- Pokemon List-->
   <section>
     <div class="grid grid-cols-2 gap-4 sm:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3">
-      <PokemonCard v-for="pokemon in state.pokemonList" :key="pokemon.id" :pokemon="pokemon" />
+      <PokemonCard v-for="pokemon in pokemonList" :key="pokemon.id" :pokemon="pokemon" />
     </div>
     <div ref="sentinel" class="text-center py-4">
       <!-- Sentinel Element -->
