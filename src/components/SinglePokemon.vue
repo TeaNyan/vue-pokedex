@@ -1,14 +1,31 @@
+<script setup>
+import { computed } from 'vue'
+import { calculateCardColor } from '@/assets/helpers/calculateCardColor'
+import { useStore } from 'vuex'
+
+const store = useStore()
+
+const selectedPokemon = computed(() => store.getters.selectedPokemon)
+
+console.log(selectedPokemon)
+</script>
+
 <template>
   <!-- Single Pokemon -->
   <section class="h-full">
     <div class="px-8 py-8 w-[500px] h-full">
-      <div class="bg-white shadow-md rounded-lg p-4 h-full">
-        <h2 class="text-xl font-semibold">Pikachu</h2>
-        <img
-          src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"
-          alt="Pikachu"
-          class="w-32 h-32 mx-auto"
-        />
+      <div
+        :class="`${calculateCardColor(selectedPokemon?.types[0]?.type.name) || 'bg-white'} shadow-md rounded-lg p-4 h-full`"
+      >
+        <div v-if="selectedPokemon">
+          <h2 class="text-xl font-semibold">{{ selectedPokemon.name }}</h2>
+          <img
+            :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${selectedPokemon.id}.png`"
+            :alt="selectedPokemon.name"
+            class="w-32 h-32 mx-auto"
+          />
+        </div>
+        <h1 v-else>Please select a Pokemon</h1>
       </div>
     </div>
   </section>

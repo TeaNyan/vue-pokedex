@@ -1,13 +1,23 @@
 <script setup>
 import { calculateCardColor } from '@/assets/helpers/calculateCardColor'
+import { useStore } from 'vuex'
 
 defineProps({
   pokemon: Object
 })
+
+const store = useStore()
+
+const setSelectedPokemon = (pokemon) => {
+  store.dispatch('setSelectedPokemon', pokemon)
+}
 </script>
 
 <template>
-  <div :class="`${calculateCardColor(pokemon.types[0].type.name)} shadow-md rounded-lg p-4`">
+  <button
+    :class="`${calculateCardColor(pokemon.types[0].type.name)} shadow-md rounded-lg p-4`"
+    @click="() => setSelectedPokemon(pokemon)"
+  >
     <div class="grid grid-cols-2">
       <div>
         <h2 class="text-xl font-semibold text-white">
@@ -31,5 +41,5 @@ defineProps({
         class="md:w-32 md:h-32 w-36 h-36"
       />
     </div>
-  </div>
+  </button>
 </template>
