@@ -1,6 +1,6 @@
 # Vue Pokedex [(View Demo)](https://vue-pokedex-coral.vercel.app/)
 
-Vue Pokedex is a hobby project designed to provide a seamless and interactive experience for Pokémon enthusiasts. Built using Vue.js, Vuex, and the PokeAPI, this application allows users to explore a comprehensive list of all Pokémon with detailed information.
+Vue Pokedex is a hobby project designed to provide a seamless and interactive experience for Pokémon enthusiasts. Built using Vue.js, Vuex, Tailwind and the PokeAPI, this application allows users to explore a comprehensive list of all Pokémon with detailed information.
 
 ## Features
 
@@ -13,6 +13,7 @@ Vue Pokedex is a hobby project designed to provide a seamless and interactive ex
 
 - Vue.js: A progressive JavaScript framework for building user interfaces.
 - Vuex: A state management pattern + library for Vue.js applications.
+- Tailwin: CSS library.
 - PokeAPI: An open API that provides detailed information on Pokémon.
 
 ## Recommended IDE Setup
