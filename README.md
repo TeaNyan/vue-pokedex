@@ -1,6 +1,19 @@
-# vue-pokedex
+# Vue Pokedex [(View Demo)](https://vue-pokedex-coral.vercel.app/)
 
-This template should help get you started developing with Vue 3 in Vite.
+Vue Pokedex is a hobby project designed to provide a seamless and interactive experience for Pokémon enthusiasts. Built using Vue.js, Vuex, and the PokeAPI, this application allows users to explore a comprehensive list of all Pokémon with detailed information.
+
+## Features
+
+- Complete Pokémon Database: Access information on all Pokémon, including stats (and abilities, and evolutions in future).
+- Interactive UI: Smooth and responsive user interface built with Vue.js.
+- State Management: Efficient data handling and state management using Vuex.
+- Real-time Data: Fetch the latest Pokémon data directly from the PokeAPI.
+
+## Technologies Used
+
+- Vue.js: A progressive JavaScript framework for building user interfaces.
+- Vuex: A state management pattern + library for Vue.js applications.
+- PokeAPI: An open API that provides detailed information on Pokémon.
 
 ## Recommended IDE Setup
 
