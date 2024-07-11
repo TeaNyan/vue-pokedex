@@ -87,16 +87,17 @@ console.log(selectedPokemon.value)
               <div
                 v-for="stat in state.stats"
                 :key="stat.name"
-                class="grid grid-cols-4 gap-2 w-full"
+                class="grid grid-cols-4 gap-2 w-full justify-start items-start"
               >
-                <h1 class="text-md text-gray-500 font-bold text-center col-span-1">
+                <h1 class="text-md text-gray-500 font-bold col-span-1 text-start">
                   {{ stat.name }}
                 </h1>
-                <h1 class="text-md text-slate-500 text-center col-span-1">{{ stat.value }}</h1>
+                <h1 class="text-md text-slate-500 col-span-1 text-center">{{ stat.value }}</h1>
                 <hr
                   :class="[
-                    `w-[${value}%] h-1 mx-auto my-4 bg-gray-100 border-0 rounded dark:bg-gray-400 col-span-2`
+                    `h-1 justify-self-start my-4 ${stat.value > 49 ? 'bg-green-600' : 'bg-red-500'}  border-0 rounded  col-span-2`
                   ]"
+                  :style="{ width: `${stat.value > 100 ? 100 : stat.value}%` }"
                 />
               </div>
             </div>

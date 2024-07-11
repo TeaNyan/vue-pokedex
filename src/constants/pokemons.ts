@@ -126,5 +126,61 @@ export const pokemons = [
   {
     name: 'Murkrow',
     image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/198.png'
+  },
+  {
+    name: 'Misdreavus',
+    image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/200.png'
+  },
+  {
+    name: 'Unown',
+    image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/201.png'
+  },
+  {
+    name: 'Wobbuffet',
+    image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/202.png'
+  },
+  {
+    name: 'Girafarig',
+    image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/203.png'
+  },
+  {
+    name: 'Pineco',
+    image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/204.png'
+  },
+  {
+    name: 'Dunsparce',
+    image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/206.png'
+  },
+  {
+    name: 'Gligar',
+    image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/207.png'
+  },
+  {
+    name: 'Steelix',
+    image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/208.png'
+  },
+  {
+    name: 'Snubbull',
+    image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/209.png'
+  },
+  {
+    name: 'Qwilfish',
+    image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/211.png'
+  },
+  {
+    name: 'Scizor',
+    image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/212.png'
+  },
+  {
+    name: 'Shuckle',
+    image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/213.png'
+  },
+  {
+    name: 'Heracross',
+    image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/214.png'
+  },
+  {
+    name: 'Sneasel',
+    image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/215.png'
   }
 ]
