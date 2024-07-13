@@ -71,7 +71,7 @@ watch(selectedPokemon, async (newPokemon) => {
       <div
         :class="`${selectedPokemon?.types.length > 0 ? calculateCardColor(selectedPokemon?.types[0].toLowerCase()) : 'bg-white'} shadow-md rounded-3xl pt-4 h-full`"
       >
-        <div v-if="!isPokemonLoading" class="h-full">
+        <div v-if="!state.isPokemonLoading && state.pokemon && selectedPokemon" class="h-full">
           <div class="h-1/3 flex flex-col justify-start items-center">
             <h2 class="font-semibold text-white text-3xl">
               {{ selectedPokemon.name.charAt(0).toUpperCase() + selectedPokemon.name.slice(1) }}
