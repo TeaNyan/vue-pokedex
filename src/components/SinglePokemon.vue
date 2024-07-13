@@ -38,6 +38,7 @@ const fetchSpecies = async (pokemon) => {
 const fetchPokemonData = async (url) => {
   try {
     state.isLoading = true
+    state.pokemon = null
     const response = await fetch(url)
     const data = await response.json()
     return data
