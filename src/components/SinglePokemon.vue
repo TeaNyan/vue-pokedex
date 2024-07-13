@@ -71,7 +71,12 @@ watch(selectedPokemon, async (newPokemon) => {
       <div
         :class="`${selectedPokemon?.types.length > 0 ? calculateCardColor(selectedPokemon?.types[0].toLowerCase()) : 'bg-white'} shadow-md rounded-3xl pt-4 h-full`"
       >
-        <div v-if="!state.isPokemonLoading && state.pokemon && selectedPokemon" class="h-full">
+        <div
+          v-if="
+            !state.isPokemonLoading && state.pokemon && selectedPokemon && !state.isSpeciesLoading
+          "
+          class="h-full"
+        >
           <div class="h-1/3 flex flex-col justify-start items-center">
             <h2 class="font-semibold text-white text-3xl">
               {{ selectedPokemon.name.charAt(0).toUpperCase() + selectedPokemon.name.slice(1) }}
@@ -124,9 +129,6 @@ watch(selectedPokemon, async (newPokemon) => {
             <h1 v-if="state.species" class="italic text-md text-slate-500">
               {{ state.flavor }}
             </h1>
-            <div v-else class="text-center py-4 w-full flex items-center justify-center">
-              <PulseLoader />
-            </div>
           </div>
         </div>
         <span v-else class="h-full w-full flex justify-center items-center"><PulseLoader /></span>
