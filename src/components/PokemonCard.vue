@@ -16,7 +16,7 @@ const setSelectedPokemon = (pokemon) => {
 
 <template>
   <button
-    :class="`${calculateCardColor(pokemon.types[0].type.name)} shadow-md rounded-2xl p-4`"
+    :class="`${pokemon.types.length > 0 ? calculateCardColor(pokemon.types[0].toLowerCase()) : 'bg-white'} shadow-md rounded-2xl p-4`"
     @click="() => setSelectedPokemon(pokemon)"
   >
     <div class="grid grid-cols-2">
@@ -28,16 +28,16 @@ const setSelectedPokemon = (pokemon) => {
           <ul>
             <li
               v-for="type in pokemon.types"
-              :key="type.slot"
+              :key="type"
               class="rounded-3xl w-fit bg-opacity-20 text-white bg-white py-1 px-4 my-1 text-center items-center border-box"
             >
-              {{ type.type.name }}
+              {{ type }}
             </li>
           </ul>
         </div>
       </div>
       <img
-        :src="pokemon.sprites.front_default"
+        :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`"
         :alt="pokemon.name"
         class="md:w-32 md:h-32 w-36 h-36"
       />

@@ -11,7 +11,10 @@ const store = useStore()
 const state = reactive({
   species: null,
   isSpeciesLoading: true,
-  stats: []
+  stats: [],
+  isPokemonLoading: true,
+  pokemon: null,
+  flavor: ''
 })
 
 const selectedPokemon = computed(() => store.getters.selectedPokemon)
@@ -19,9 +22,12 @@ const selectedPokemon = computed(() => store.getters.selectedPokemon)
 const fetchSpecies = async (pokemon) => {
   try {
     state.isSpeciesLoading = true
+    state.species = null
+    state.flavor = ''
     const response = await fetch(pokemon.species.url)
     const data = await response.json()
     state.species = data
+    state.flavor = getFlavorText(data.flavor_text_entries)
   } catch (error) {
     console.error(error)
   } finally {
@@ -29,19 +35,33 @@ const fetchSpecies = async (pokemon) => {
   }
 }
 
-watch(selectedPokemon, (newPokemon) => {
-  if (newPokemon) {
-    fetchSpecies(newPokemon)
-    state.stats = getStats(newPokemon.stats)
-    console.log(newPokemon)
+const fetchPokemonData = async (url) => {
+  try {
+    state.isLoading = true
+    state.pokemon = null
+    state.stats = []
+    state.isPokemonLoading = true
+    const response = await fetch(url)
+    const data = await response.json()
+    return data
+  } catch (error) {
+    console.error(error)
+  } finally {
+    state.isLoading = false
+    state.isPokemonLoading = false
   }
-})
-
-const calculateClass = (value) => {
-  return `w-[${value}%] h-1 mx-auto my-4 bg-gray-100 border-0 rounded dark:bg-gray-400 col-span-2`
 }
 
-console.log(selectedPokemon.value)
+watch(selectedPokemon, async (newPokemon) => {
+  if (newPokemon) {
+    const p = await fetchPokemonData(newPokemon.url)
+    if (p) {
+      fetchSpecies(p)
+      state.stats = getStats(p.stats)
+      state.pokemon = p
+    }
+  }
+})
 </script>
 
 <template>
@@ -49,9 +69,14 @@ console.log(selectedPokemon.value)
   <section class="h-full">
     <div class="px-8 py-8 w-[500px] h-full">
       <div
-        :class="`${calculateCardColor(selectedPokemon?.types[0]?.type.name) || 'bg-white'} shadow-md rounded-3xl pt-4 h-full`"
+        :class="`${selectedPokemon?.types.length > 0 ? calculateCardColor(selectedPokemon?.types[0].toLowerCase()) : 'bg-white'} shadow-md rounded-3xl pt-4 h-full`"
       >
-        <div v-if="selectedPokemon" class="h-full">
+        <div
+          v-if="
+            !state.isPokemonLoading && state.pokemon && selectedPokemon && !state.isSpeciesLoading
+          "
+          class="h-full"
+        >
           <div class="h-1/3 flex flex-col justify-start items-center">
             <h2 class="font-semibold text-white text-3xl">
               {{ selectedPokemon.name.charAt(0).toUpperCase() + selectedPokemon.name.slice(1) }}
@@ -60,10 +85,10 @@ console.log(selectedPokemon.value)
               <div>
                 <span
                   v-for="type in selectedPokemon.types"
-                  :key="type.slot"
+                  :key="type"
                   class="rounded-3xl w-fit bg-opacity-20 text-white bg-white py-1 px-4 my-1 text-center items-center border-box mx-1"
                 >
-                  {{ type.type.name }}
+                  {{ type }}
                 </span>
               </div>
               <div class="text-white text-md">
@@ -71,7 +96,8 @@ console.log(selectedPokemon.value)
               </div>
             </div>
             <img
-              :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${selectedPokemon.id}.png`"
+              v-if="state.pokemon"
+              :src="state.pokemon.sprites.front_default"
               :alt="selectedPokemon.name"
               class="w-64 h-64 mx-auto"
             />
@@ -79,9 +105,6 @@ console.log(selectedPokemon.value)
           <div
             class="bg-white rounded-3xl h-2/3 flex flex-col justify-start items-start pt-16 px-6"
           >
-            <span class="w-full text-2xl text-center" v-if="state.isSpeciesLoading"
-              ><PulseLoader
-            /></span>
             <hr class="w-96 h-0.5 mx-auto my-4 bg-gray-100 border-0 rounded dark:bg-gray-400" />
             <div class="w-full">
               <div
@@ -104,11 +127,11 @@ console.log(selectedPokemon.value)
             <hr class="w-96 h-0.5 mx-auto my-4 bg-gray-100 border-0 rounded dark:bg-gray-400" />
 
             <h1 v-if="state.species" class="italic text-md text-slate-500">
-              {{ getFlavorText(state.species?.flavor_text_entries) }}
+              {{ state.flavor }}
             </h1>
           </div>
         </div>
-        <h1 v-else><PulseLoader /></h1>
+        <span v-else class="h-full w-full flex justify-center items-center"><PulseLoader /></span>
       </div>
     </div>
   </section>

@@ -1,8 +1,9 @@
 <script setup>
-import { reactive, onMounted, onBeforeUnmount, ref, computed } from 'vue'
+import { reactive, onMounted, onBeforeUnmount, ref, computed, watch } from 'vue'
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 import PokemonCard from '@/components/PokemonCard.vue'
 import { useStore } from 'vuex'
+import { pokemons } from '@/constants/pokemons'
 
 const state = reactive({
   isLoading: true,
@@ -17,35 +18,30 @@ const setPokemonList = (list) => store.dispatch('setPokemonListAction', list)
 
 const sentinel = ref(null)
 
-const fetchPokemonData = async (url) => {
-  try {
-    state.isLoading = true
-    const response = await fetch(url)
-    const data = await response.json()
-    return data
-  } catch (error) {
-    console.error(error)
-  } finally {
-    state.isLoading = false
+const getAdditionalData = (pokemon) => {
+  const p = pokemons.find((p) => p.name.toLowerCase() === pokemon.name.toLowerCase())
+  if (p === undefined) {
+    return { id: 0, types: [] }
   }
+  return { id: p.id, types: p.type }
 }
 
 const fetchPokemonList = async () => {
   try {
+    state.isLoading = true
     const response = await fetch(state.nextUrl)
     const data = await response.json()
     state.nextUrl = data.next
     const rawPokemons = data.results
     const newList = []
     for (const pokemon of rawPokemons) {
-      const pokemonData = await fetchPokemonData(pokemon.url)
-      newList.push(pokemonData)
+      const pokemonData = getAdditionalData(pokemon)
+      newList.push({ ...pokemon, types: pokemonData.types, id: pokemonData.id })
     }
+
     setPokemonList([...pokemonList.value, ...newList])
     if (!selectedPokemon.value) {
       store.dispatch('setSelectedPokemonAction', newList[0])
-    } else {
-      console.log('Selected Pokemon:', selectedPokemon.value)
     }
   } catch (error) {
     console.error(error)
