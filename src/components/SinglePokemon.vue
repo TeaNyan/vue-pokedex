@@ -129,7 +129,7 @@ watch(selectedPokemon, async (newPokemon) => {
             </div>
           </div>
         </div>
-        <h1 v-else><PulseLoader /></h1>
+        <span v-else class="h-full w-full flex justify-center items-center"><PulseLoader /></span>
       </div>
     </div>
   </section>
